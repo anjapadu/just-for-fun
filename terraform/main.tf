@@ -102,7 +102,7 @@ resource "google_cloudbuild_trigger" "app-engine-trigger" {
     }
   }
 
-  filename = "back/cloudbuild.yaml"
+  filename = "cloudbuild.yaml"
 }
 
 output "firebase-id" {
