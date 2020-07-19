@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "export NODE_ENV=develop && export GOOGLE_APPLICATION_CREDENTIALS=\"credentials/justforfun-283718-dd6bcb1abb0c.json\" && nodemon ./index.mjs localhost 3000",
     "build:zip": "export NODE_ENV=production && webpack --mode production --env.production --progress && cp package.json ./dist/ && cd dist  && npm install --production && zip -r deploy.zip . && rm -rf node_modules && rm -rf package* && rm -rf server.js && cd ..",
-    "build": "rm -rf dist/* && export NODE_ENV=production && webpack --mode production --env.production --progress && cp package.json ./dist/ && cd dist && npm install --production && cd ..",
+    "build": "rm -rf dist/* && export NODE_ENV=production && webpack --mode production --env.production --progress && cp package.json ./dist/ && cp app.yaml ./dist/",
     "start:prod": "export GOOGLE_APPLICATION_CREDENTIALS=credentials/justforfun-283718-dd6bcb1abb0c.json && export SECRET=secret && export  BUCKET_URL=projects/justforfun-283718/locations/global &&  node dist/server.js"
   },
   "author": "",
