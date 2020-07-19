@@ -1,0 +1,36 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "export NODE_ENV=develop && export GOOGLE_APPLICATION_CREDENTIALS=\"credentials/justforfun-283718-dd6bcb1abb0c.json\" && nodemon ./index.mjs localhost 3000",
+    "build": "export NODE_ENV=production && webpack --mode production --env.production --progress && cp package.json ./dist/ && cd dist  && npm install --production && zip -r deploy.zip . && rm -rf node_modules && rm -rf package* && rm -rf server.js && cd ..",
+    "start:prod": "export GOOGLE_APPLICATION_CREDENTIALS=credentials/justforfun-283718-dd6bcb1abb0c.json && export SECRET=secret && export  BUCKET_URL=projects/justforfun-283718/locations/global &&  node dist/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "^5.1.2",
+    "@google-cloud/translate": "^6.0.2",
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "html-metadata": "^1.7.1",
+    "jsonwebtoken": "^8.5.1",
+    "mime-types": "^2.1.27",
+    "multer": "^1.4.2",
+    "url-metadata": "^2.4.0"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.10.4",
+    "nodemon": "^2.0.4",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.0"
+  }
+}

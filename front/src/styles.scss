@@ -1,0 +1,18 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~medium-editor/dist/css/medium-editor.min.css';
+@import '~medium-editor/dist/css/themes/default.css';
+body {
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+.container{
+  width:  100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.nav{
+    height: calc(100vh - 64px);
+  }
+}

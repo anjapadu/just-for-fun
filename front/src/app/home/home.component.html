@@ -1,0 +1,14 @@
+<mat-toolbar>
+  <span>Welcome {{displayName}}</span>
+  <span class="spacer"></span>
+  <button class="logout" mat-raised-button color="primary" (click)="logout()">LOGOUT</button>
+</mat-toolbar>
+<div class="container nav">
+  <div class="editor">
+    <mat-progress-bar *ngIf="isLoading" class="progress" mode="query"></mat-progress-bar>
+    <textarea class="editable" placeholder="Place you text here..."></textarea>
+    <span class="last-saved">
+      Last Saved: {{lastSaved}}
+    </span>
+  </div>
+</div>

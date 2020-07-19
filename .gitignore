@@ -1,0 +1,7 @@
+terraform/credentials
+back/credentials
+node_modules
+.terraform
+.env
+variables.tfvars
+front/src/environments/*
