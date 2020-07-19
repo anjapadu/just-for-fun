@@ -9,7 +9,9 @@ if (process.env.NODE_ENV === "develop") {
   dotenv.config();
 }
 
-const translate = new Translate.v3.TranslationServiceClient();
+const translate = new Translate.v3.TranslationServiceClient({
+  projectId: "justforfun-283718",
+});
 export const getUser = (username, password) => {
   if (username === "alice" && password === "monkey1") {
     return {
