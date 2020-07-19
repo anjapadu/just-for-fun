@@ -15,7 +15,7 @@ router.get("/login/:username/:password", (req, res) => {
         {
           user,
         },
-        process.env.SECRET,
+        process.env._SECRET,
         {
           algorithm: "HS512",
           expiresIn: "24h",

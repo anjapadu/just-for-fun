@@ -22,7 +22,7 @@ const ignoredRoutes = (req) => {
 
 app.use(
   jwt({
-    secret: process.env.SECRET,
+    secret: process.env._SECRET,
     algorithms: ["HS512"],
     getToken: function fromHeaderOrQuerystring(req) {
       if (
