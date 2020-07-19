@@ -23,16 +23,9 @@ export const getUser = (username, password) => {
 };
 
 export const getTranslation = async (html, body, language = null) => {
-  const detect = {
-    parent: process.env._BUCKET_URL,
-    content: body,
-  };
-  const [detectedLanguages] = await translate.detectLanguage(detect);
-  console.log({ detectedLanguages: detectedLanguages.languages });
   const request = {
     parent: process.env._BUCKET_URL,
     contents: [html],
-    sourceLanguageCode: detectedLanguages.languages[0].languageCode,
     targetLanguageCode: language || "ja",
   };
   const [response] = await translate.translateText({
