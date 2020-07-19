@@ -24,11 +24,15 @@ export const getUser = (username, password) => {
 
 export const getTranslation = async (html, body, language = null) => {
   const request = {
-    parent: process.env._BUCKET_URL,
+    parent: "projects/justforfun-283718/locations/global",
     contents: [html],
     targetLanguageCode: language || "ja",
   };
+  console.log({
+    process: process.env,
+  });
   const [response] = await translate.translateText({
+    mimeType: "text/html",
     ...request,
   });
   return response;
