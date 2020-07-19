@@ -68,7 +68,7 @@ resource "google_storage_bucket_object" "object" {
 
 resource "google_app_engine_standard_app_version" "just-for-fun-app-back-standard" {
   provider   = google-beta
-  version_id = "v2"
+  version_id = "v1"
   service    = "default"
   runtime    = "nodejs12"
 
@@ -92,6 +92,18 @@ resource "google_app_engine_standard_app_version" "just-for-fun-app-back-standar
   delete_service_on_destroy = true
 }
 
+resource "google_cloudbuild_trigger" "app-engine-trigger" {
+  provider = google-beta
+  github {
+    owner = "anjapadu"
+    name = "just-for-fun"
+    push {
+      branch = "^master$"
+    }
+  }
+
+  filename = "back/cloudbuild.yaml"
+}
 
 output "firebase-id" {
   value = "${google_firebase_project.just-for-fun-firebase-project.id}"
