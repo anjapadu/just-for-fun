@@ -2,3 +2,4 @@ runtime: nodejs12
 env_variables:
   _SECRET: $_SECRET
   _BUCKET_URL: $_BUCKET_URL
+  GOOGLE_APPLICATION_CREDENTIALS: $_BUCKET_URL
