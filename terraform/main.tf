@@ -60,9 +60,9 @@ resource "google_storage_bucket" "bucket" {
 
 resource "google_storage_bucket_object" "object" {
   provider = google-beta
-  name   = "deploy.zip"
-  bucket = google_storage_bucket.bucket.name
-  source = "../back/dist/deploy.zip"
+  name     = "deploy.zip"
+  bucket   = google_storage_bucket.bucket.name
+  source   = "../back/dist/deploy.zip"
 }
 
 
@@ -83,25 +83,43 @@ resource "google_app_engine_standard_app_version" "just-for-fun-app-back-standar
   }
 
   env_variables = {
-    port       = "8080"
-    SECRET     = var.secrets.secret
-    BUCKET_URL = var.secrets.bucket-url
+    _SECRET     = var.secrets.secret
+    _BUCKET_URL = var.secrets.bucket-url
   }
   depends_on = [google_storage_bucket_object.object]
 
   delete_service_on_destroy = true
 }
 
+resource "google_app_engine_application" "app" {
+  provider    = google-beta
+  project     = "justforfun-283718"
+  location_id = "us-east1"
+}
+
+resource "google_app_engine_service_split_traffic" "liveapp-traffic" {
+  service = google_app_engine_standard_app_version.just-for-fun-app-back-standard.service
+  # project = "justforfun-283718"
+  provider        = google-beta
+  migrate_traffic = false
+  split {
+    shard_by = "IP"
+    allocations = {
+      (google_app_engine_standard_app_version.just-for-fun-app-back-standard.version_id) = 1
+    }
+  }
+}
+
 resource "google_cloudbuild_trigger" "app-engine-trigger" {
   provider = google-beta
   github {
     owner = "anjapadu"
-    name = "just-for-fun"
+    name  = "just-for-fun"
     push {
       branch = "^master$"
     }
   }
-
+  disabled = true
   filename = "cloudbuild.yaml"
 }
 
