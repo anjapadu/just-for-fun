@@ -22,15 +22,12 @@ export const getUser = (username, password) => {
   return false;
 };
 
-export const getTranslation = async (html, body, language = null) => {
+export const getTranslation = async (body, language = null) => {
   const request = {
     parent: "projects/justforfun-283718/locations/global",
-    contents: [html],
+    contents: [body],
     targetLanguageCode: language || "ja",
   };
-  console.log({
-    process: process.env,
-  });
   const [response] = await translate.translateText({
     mimeType: "text/html",
     ...request,

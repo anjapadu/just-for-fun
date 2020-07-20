@@ -82,11 +82,10 @@ export const translate = async (req, res) => {
     );
     const $ = cheerio.load(data);
     const translated = await getTranslation(
-      $.html(),
       $("body").html(),
       req.query.lang || null
     );
-    res.send(translated.translations[0].translatedText);
+    res.send($("body").replaceWith(translated.translations[0].translatedText));
   } catch (e) {
     console.error(e);
     if (e.code === 3) {
