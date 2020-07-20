@@ -65,8 +65,14 @@ resource "google_storage_bucket_object" "object" {
   source   = "../back/dist/deploy.zip"
 }
 
+resource "google_app_engine_application" "app" {
+  provider    = google-beta
+  project     = "justforfun-283718"
+  location_id = "us-east1"
+}
 
-resource "google_app_engine_standard_app_version" "just-for-fun-app-back-standard" {
+
+resource "google_app_engine_standard_app_version" "just-for-fun-app-back-standard-v1" {
   provider   = google-beta
   version_id = "v1"
   service    = "default"
@@ -91,23 +97,18 @@ resource "google_app_engine_standard_app_version" "just-for-fun-app-back-standar
   delete_service_on_destroy = true
 }
 
-resource "google_app_engine_application" "app" {
-  provider    = google-beta
-  project     = "justforfun-283718"
-  location_id = "us-east1"
-}
-
 resource "google_app_engine_service_split_traffic" "liveapp-traffic" {
-  service = google_app_engine_standard_app_version.just-for-fun-app-back-standard.service
+  service = google_app_engine_standard_app_version.just-for-fun-app-back-standard-v1.service
   # project = "justforfun-283718"
   provider        = google-beta
   migrate_traffic = false
   split {
     shard_by = "IP"
     allocations = {
-      (google_app_engine_standard_app_version.just-for-fun-app-back-standard.version_id) = 1
+      (google_app_engine_standard_app_version.just-for-fun-app-back-standard-v1.version_id) = 1
     }
   }
+  depends_on = [google_app_engine_standard_app_version.just-for-fun-app-back-standard-v1]
 }
 
 resource "google_cloudbuild_trigger" "app-engine-trigger" {

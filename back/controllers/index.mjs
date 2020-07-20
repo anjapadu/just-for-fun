@@ -85,7 +85,8 @@ export const translate = async (req, res) => {
       $("body").html(),
       req.query.lang || null
     );
-    res.send($("body").replaceWith(translated.translations[0].translatedText));
+    $('body').replaceWith(`<body>${translated.translations[0].translatedText}</body>`)
+    res.send($("html").html());
   } catch (e) {
     console.error(e);
     if (e.code === 3) {
